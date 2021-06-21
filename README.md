@@ -22,6 +22,7 @@ helm install rabbitmq bitnami/rabbitmq \
   --set auth.password=password \
   --set secretKey.forcePassword=true
 ```
+
 # Setup
 
 ```bash
@@ -33,3 +34,10 @@ kubectl apply -f ./items
 # scale down subscriber to 0 and watch the queue (subscriber-neworder) drop
 # kubectl scale deployment.v1.apps/subscriber-deployment --replicas=0
 ```
+
+# Attempted solutions
+
+* Set TTL via rabbitmq configuration
+    * https://www.rabbitmq.com/ttl.html
+    * rabbitmqctl set_policy TTL ".*" '{"message-ttl":600000}' --apply-to queues
+    * **Note**: did not work, messages still deleted
