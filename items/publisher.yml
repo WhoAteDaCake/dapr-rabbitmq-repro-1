@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: publisher
+  name: publisher-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: publisher
+  template:
+    metadata:
+      annotations:
+        dapr.io/app-id: publisher
+        dapr.io/enabled: 'true'
+      labels:
+        app: publisher
+    spec:
+      containers:
+      - args:
+        - run
+        - code/pub.go
+        command:
+        - go
+        env:
+        - name: DAPR_PUBSUB_NAME
+          value: messages
+        image: examples/code-image:latest
+        name: publisher
+        # Minikube will pull locally
+        imagePullPolicy: Never
+        # ports:
+        # - containerPort: 3000
+
