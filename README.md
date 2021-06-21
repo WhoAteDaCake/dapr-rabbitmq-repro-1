@@ -30,4 +30,6 @@ docker build -t examples/code-image .
 kubectl apply -f ./items
 # Open rabbitmq dashboard to view status
 # kubectl port-forward --namespace default svc/rabbitmq 15672:15672
+# scale down subscriber to 0 and watch the queue (subscriber-neworder) drop
+# kubectl scale deployment.v1.apps/subscriber-deployment --replicas=0
 ```
